@@ -33,7 +33,9 @@ export async function loadEnvironmentModels() {
 
 function createInstancedModel(key, scene, instances, castShadow) {
   const gltf = envLoaded[key];
-  if (!gltf || instances.length === 0) return;
+  if (!gltf || instances.length === 0) {
+    return;
+  }
 
   const template = gltf.scene;
   template.position.set(0, 0, 0);
@@ -43,18 +45,16 @@ function createInstancedModel(key, scene, instances, castShadow) {
 
   const meshes = [];
   template.traverse(child => {
-    if (child.isMesh) meshes.push(child);
+    if (child.isMesh) {
+      meshes.push(child);
+    }
   });
 
   const bbox = new THREE.Box3().setFromObject(template);
   const templateMinY = bbox.min.y;
 
   const instancedMeshes = meshes.map(mesh => {
-    const instMesh = new THREE.InstancedMesh(
-      mesh.geometry,
-      mesh.material,
-      instances.length
-    );
+    const instMesh = new THREE.InstancedMesh(mesh.geometry, mesh.material, instances.length);
     instMesh.castShadow = castShadow;
     instMesh.receiveShadow = castShadow;
     scene.add(instMesh);
@@ -83,7 +83,9 @@ function createInstancedModel(key, scene, instances, castShadow) {
 }
 
 function renderInstancedGroup(key, scene, instances) {
-  if (!instances || instances.length === 0) return;
+  if (!instances || instances.length === 0) {
+    return;
+  }
 
   const shadowCastList = [];
   const noShadowList = [];
@@ -223,13 +225,13 @@ export function buildForest(scene) {
       const key = treeKeys[Math.floor(seededRand(seed++) * treeKeys.length)];
       const rotY = seededRand(seed++) * Math.PI * 2;
       const isBoundary = getHeightAt(t.x, t.z) > 4.0;
-      
+
       placements[key].push({
         x: t.x,
         z: t.z,
         scale: rs * 6,
         rotY: rotY,
-        castShadow: !isBoundary
+        castShadow: !isBoundary,
       });
 
       // Register collider for valley trees (where height <= 4.0)
@@ -291,7 +293,7 @@ export function buildForest(scene) {
         z: cz,
         scale: 8,
         rotY: seededRand(cx * 7 + cz) * Math.PI * 2,
-        castShadow: false
+        castShadow: false,
       });
     }
   }
@@ -329,13 +331,13 @@ export function buildForest(scene) {
       const rs = 3 + seededRand(rseed++) * 5;
       const gy = getHeightAt(rx, rz);
       const isBoundaryRock = gy > 5.0;
-      
+
       placements[key].push({
         x: rx,
         z: rz,
         scale: rs,
         rotY: seededRand(rseed++) * Math.PI * 2,
-        castShadow: !isBoundaryRock
+        castShadow: !isBoundaryRock,
       });
     }
   }

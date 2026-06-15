@@ -108,7 +108,9 @@ window.addEventListener('keyup', e => {
 
 export function initMobileControls() {
   const isMobile = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
-  if (!isMobile) return;
+  if (!isMobile) {
+    return;
+  }
 
   const mobileControls = document.getElementById('mobile-controls');
   if (mobileControls) {
@@ -127,13 +129,14 @@ export function initMobileControls() {
   const base = document.getElementById('joystick-base');
   const knob = document.getElementById('joystick-knob');
 
-  if (!base || !knob) return;
+  if (!base || !knob) {
+    return;
+  }
 
   let dragStart = null;
 
   const handleTouchStart = e => {
     e.preventDefault(); // Prevent page scrolling/bounce
-    const touch = e.touches[0];
     const rect = base.getBoundingClientRect();
     const centerX = rect.left + rect.width / 2;
     const centerY = rect.top + rect.height / 2;
@@ -141,7 +144,9 @@ export function initMobileControls() {
   };
 
   const handleTouchMove = e => {
-    if (!dragStart) return;
+    if (!dragStart) {
+      return;
+    }
     e.preventDefault();
     const touch = e.touches[0];
     let dx = touch.clientX - dragStart.x;
@@ -168,14 +173,22 @@ export function initMobileControls() {
 
     // Direct movement steering mappings
     if (dist > 8) {
-      if (normY < -0.38) input.forward = true;
-      if (normY > 0.38) input.back = true;
-      if (normX < -0.38) input.left = true;
-      if (normX > 0.38) input.right = true;
+      if (normY < -0.38) {
+        input.forward = true;
+      }
+      if (normY > 0.38) {
+        input.back = true;
+      }
+      if (normX < -0.38) {
+        input.left = true;
+      }
+      if (normX > 0.38) {
+        input.right = true;
+      }
     }
   };
 
-  const handleTouchEnd = e => {
+  const handleTouchEnd = () => {
     dragStart = null;
     knob.style.transform = 'translate(0px, 0px)';
     input.forward = false;
@@ -203,7 +216,7 @@ export function initMobileControls() {
       },
       { passive: false }
     );
-    btnJump.addEventListener('touchend', e => {
+    btnJump.addEventListener('touchend', () => {
       input.jump = false;
     });
   }
@@ -218,7 +231,7 @@ export function initMobileControls() {
       },
       { passive: false }
     );
-    btnInteract.addEventListener('touchend', e => {
+    btnInteract.addEventListener('touchend', () => {
       input.interact = false;
     });
   }

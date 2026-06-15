@@ -37,9 +37,13 @@ export function getJwtExp(token) {
 
 export function setIdTokenCookie(token) {
   const exp = getJwtExp(token);
-  if (!exp) throw new Error('id token missing or invalid "exp" claim');
+  if (!exp) {
+    throw new Error('id token missing or invalid "exp" claim');
+  }
   const now = Math.floor(Date.now() / 1000);
-  if (exp <= now) throw new Error('id token is expired');
+  if (exp <= now) {
+    throw new Error('id token is expired');
+  }
   // Use setCookie with explicit expTimestamp; do not fall back to a default expiry
   setCookie('idToken', token, 0, exp);
 }

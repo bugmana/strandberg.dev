@@ -12,8 +12,12 @@ export function wait(ms) {
 }
 
 export function updateProgress(progressBarEl, progressTextEl, percent, message) {
-  if (progressBarEl) progressBarEl.style.width = percent + '%';
-  if (progressTextEl) progressTextEl.textContent = message;
+  if (progressBarEl) {
+    progressBarEl.style.width = percent + '%';
+  }
+  if (progressTextEl) {
+    progressTextEl.textContent = message;
+  }
 }
 
 export async function formatHttpError(response) {
@@ -39,7 +43,7 @@ export async function formatHttpError(response) {
         details += ` - ${text}`;
       }
     }
-  } catch (e) {
+  } catch {
     // If we can't read the response body, just return the status
   }
 

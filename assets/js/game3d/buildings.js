@@ -42,7 +42,9 @@ export async function loadBuildingModels() {
 
 function placeModel(key, scene, x, z, scale = 1, rotY = 0, colliderInset = null, centerXZ = false) {
   const gltf = loaded[key];
-  if (!gltf) return null;
+  if (!gltf) {
+    return null;
+  }
   const model = gltf.scene.clone(true);
 
   model.scale.setScalar(scale);
@@ -175,13 +177,17 @@ export function buildBarracks(scene) {
   // West side fence wall
   for (let fx = -120; fx <= -7; fx += FENCE_STEP) {
     const gy = getHeightAt(fx, FENCE_Z);
-    if (gy > 6.0) continue; // Skip if going up the hills!
+    if (gy > 6.0) {
+      continue;
+    } // Skip if going up the hills!
     placeModel('fence_wood', scene, fx, FENCE_Z, FENCE_SCALE, Math.PI / 2, null, true);
   }
   // East side fence wall
   for (let fx = 7; fx <= 120; fx += FENCE_STEP) {
     const gy = getHeightAt(fx, FENCE_Z);
-    if (gy > 6.0) continue; // Skip if going up the hills!
+    if (gy > 6.0) {
+      continue;
+    } // Skip if going up the hills!
     placeModel('fence_wood', scene, fx, FENCE_Z, FENCE_SCALE, Math.PI / 2, null, true);
   }
 
@@ -217,7 +223,9 @@ export function buildRoad(scene) {
     const x = Math.sin(i * 0.1) * 1.5; // very gentle wave
     const z = -55 + i * 6;
     const gy = getHeightAt(x, z);
-    if (gy > 1.0) continue; // Skip if going up the hills!
+    if (gy > 1.0) {
+      continue;
+    } // Skip if going up the hills!
     const targetGy = gy + 0.05;
 
     const geo = new THREE.BoxGeometry(roadW, 0.2, 6.2);
@@ -234,7 +242,9 @@ export function buildRoad(scene) {
     const x = -90 + i * 6;
     const z = 20 + Math.sin(i * 0.1) * 1.5; // very gentle wave
     const gy = getHeightAt(x, z);
-    if (gy > 1.0) continue; // Skip if going up the hills!
+    if (gy > 1.0) {
+      continue;
+    } // Skip if going up the hills!
     const targetGy = gy + 0.05;
 
     const geo = new THREE.BoxGeometry(6.2, 0.2, roadW);

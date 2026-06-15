@@ -2,17 +2,17 @@ import * as THREE from 'three';
 import { input } from './input.js';
 
 const LOADING_TIPS = [
-  "Tip: The Agile Coach in the Town Hall facilitates standups at 9:00 AM sharp.",
-  "Tip: Running away from legacy code bugs is a valid refactoring strategy.",
-  "Tip: Press Shift to sprint. Coffee breaks also restore your movement energy.",
+  'Tip: The Agile Coach in the Town Hall facilitates standups at 9:00 AM sharp.',
+  'Tip: Running away from legacy code bugs is a valid refactoring strategy.',
+  'Tip: Press Shift to sprint. Coffee breaks also restore your movement energy.',
   "Tip: If the world isn't rendering, check that your graphics drivers are up to date.",
   "Tip: Don't stand in the red/error stack traces during production outages.",
-  "Tip: Kobolds in the Fargodeep Mine are extremely protective of their stack traces.",
-  "Tip: Speak to Smith Argus if you need help refactoring your weapons and armor.",
-  "Tip: Press Enter to open the chat log, or tap the chat frame on mobile.",
-  "Tip: You can execute abilities in slots 1-4 by pressing the numeric keys.",
-  "Tip: Commit early and push often to avoid massive merge conflicts.",
-  "Tip: If you segfault, you will resurrect at the nearest graveyard (Northshire Abbey)."
+  'Tip: Kobolds in the Fargodeep Mine are extremely protective of their stack traces.',
+  'Tip: Speak to Smith Argus if you need help refactoring your weapons and armor.',
+  'Tip: Press Enter to open the chat log, or tap the chat frame on mobile.',
+  'Tip: You can execute abilities in slots 1-4 by pressing the numeric keys.',
+  'Tip: Commit early and push often to avoid massive merge conflicts.',
+  'Tip: If you segfault, you will resurrect at the nearest graveyard (Northshire Abbey).',
 ];
 
 // ── WoW-style HUD manager ─────────────────────────────────────────────────────
@@ -90,7 +90,9 @@ export class HUD3D {
     this._btnRelease = document.getElementById('btn-release');
     this._onReleaseCallback = null;
     this._btnRelease.addEventListener('click', () => {
-      if (this._onReleaseCallback) this._onReleaseCallback();
+      if (this._onReleaseCallback) {
+        this._onReleaseCallback();
+      }
     });
 
     this._buildMinimapBackground();
@@ -128,31 +130,31 @@ export class HUD3D {
   setLoadingProgress(pct) {
     this._loadingFill.style.width = pct + '%';
     if (this._loadingStatus) {
-      let status = "Loading CITADEL...";
+      let status = 'Loading CITADEL...';
       if (pct < 10) {
-        status = "Initializing engine...";
+        status = 'Initializing engine...';
       } else if (pct < 15) {
-        status = "Configuring global lighting...";
+        status = 'Configuring global lighting...';
       } else if (pct < 25) {
-        status = "Compiling terrain mesh...";
+        status = 'Compiling terrain mesh...';
       } else if (pct < 45) {
-        status = "Downloading campus assets...";
+        status = 'Downloading campus assets...';
       } else if (pct < 55) {
-        status = "Laying down streets and roads...";
+        status = 'Laying down streets and roads...';
       } else if (pct < 65) {
-        status = "Constructing buildings and offices...";
+        status = 'Constructing buildings and offices...';
       } else if (pct < 75) {
-        status = "Filling Crystal Lake...";
+        status = 'Filling Crystal Lake...';
       } else if (pct < 85) {
-        status = "Instancing forest boundary...";
+        status = 'Instancing forest boundary...';
       } else if (pct < 90) {
-        status = "Importing employee assets...";
+        status = 'Importing employee assets...';
       } else if (pct < 95) {
-        status = "Spawning QA test bugs...";
+        status = 'Spawning QA test bugs...';
       } else if (pct < 98) {
-        status = "Pre-rendering 3D campus...";
+        status = 'Pre-rendering 3D campus...';
       } else {
-        status = "Deploying to production!";
+        status = 'Deploying to production!';
       }
       this._loadingStatus.textContent = status;
     }
@@ -248,10 +250,14 @@ export class HUD3D {
       const pFrame = document.getElementById('player-frame');
       if (level >= 10) {
         this._playerLevel.textContent = `Lv ${level} (Elite)`;
-        if (pFrame) pFrame.classList.add('elite-frame');
+        if (pFrame) {
+          pFrame.classList.add('elite-frame');
+        }
       } else {
         this._playerLevel.textContent = `Lv ${level}`;
-        if (pFrame) pFrame.classList.remove('elite-frame');
+        if (pFrame) {
+          pFrame.classList.remove('elite-frame');
+        }
       }
     }
   }
@@ -296,7 +302,9 @@ export class HUD3D {
   addChat(text, type = 'normal') {
     // Cap chat history at 30 messages to prevent unbounded DOM growth
     const existing = this._chatEl.querySelectorAll('.chat-line');
-    if (existing.length >= 30) existing[0].remove();
+    if (existing.length >= 30) {
+      existing[0].remove();
+    }
 
     const el = document.createElement('div');
     el.className = 'chat-line ' + type;
@@ -385,7 +393,9 @@ export class HUD3D {
       setTimeout(() => {
         el.remove();
         const idx = this._activeBubbles.findIndex(b => b.el === el);
-        if (idx !== -1) this._activeBubbles.splice(idx, 1);
+        if (idx !== -1) {
+          this._activeBubbles.splice(idx, 1);
+        }
       }, 250);
     }, 4000);
 
@@ -394,7 +404,9 @@ export class HUD3D {
   }
 
   updateSpeechBubbles(camera) {
-    if (this._activeBubbles.length === 0) return;
+    if (this._activeBubbles.length === 0) {
+      return;
+    }
     const tempV = new THREE.Vector3();
 
     this._activeBubbles.forEach(b => {
@@ -616,8 +628,12 @@ export class HUD3D {
   }
 
   triggerAction(slotIndex) {
-    if (slotIndex < 0 || slotIndex >= HUD3D.ACTIONS.length) return null;
-    if (this._cooldowns[slotIndex] > 0) return null;
+    if (slotIndex < 0 || slotIndex >= HUD3D.ACTIONS.length) {
+      return null;
+    }
+    if (this._cooldowns[slotIndex] > 0) {
+      return null;
+    }
     const action = HUD3D.ACTIONS[slotIndex];
     if (this.player && action.energy > 0 && this.player.mp < action.energy) {
       this.addChat('Not enough energy!', 'err');

@@ -115,7 +115,9 @@ export function getHeightAt(x, z) {
   const key = (qx << 16) ^ (qz & 0xffff); // fast integer key
 
   const cached = _heightCache.get(key);
-  if (cached !== undefined) return cached;
+  if (cached !== undefined) {
+    return cached;
+  }
 
   const u = (x + WORLD_SIZE / 2) / WORLD_SIZE;
   const v = (z + WORLD_SIZE / 2) / WORLD_SIZE;
@@ -126,7 +128,9 @@ export function getHeightAt(x, z) {
     let evicted = 0;
     for (const k of _heightCache.keys()) {
       _heightCache.delete(k);
-      if (++evicted >= _HEIGHT_CACHE_MAX / 2) break;
+      if (++evicted >= _HEIGHT_CACHE_MAX / 2) {
+        break;
+      }
     }
   }
   _heightCache.set(key, h);

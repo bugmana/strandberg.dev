@@ -6,7 +6,9 @@ const loader = new GLTFLoader();
 const cache = new Map();
 
 export function loadGLTF(url) {
-  if (cache.has(url)) return Promise.resolve(cache.get(url));
+  if (cache.has(url)) {
+    return Promise.resolve(cache.get(url));
+  }
   return new Promise(resolve => {
     loader.load(
       url,
@@ -24,14 +26,18 @@ export function loadGLTF(url) {
 }
 
 export function cloneModel(gltf) {
-  if (!gltf) return null;
+  if (!gltf) {
+    return null;
+  }
   return SkeletonUtils.clone(gltf.scene);
 }
 
 export function findClip(clips, ...names) {
   for (const name of names) {
     const c = THREE.AnimationClip.findByName(clips, name);
-    if (c) return c;
+    if (c) {
+      return c;
+    }
   }
   return clips[0] || null;
 }

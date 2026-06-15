@@ -88,7 +88,9 @@ export class Player3D {
   /** Async: try to load a glTF human model. Falls back to box mesh on failure. */
   async initModel() {
     const gltf = await loadGLTF('/assets/models/knight.glb');
-    if (!gltf) return;
+    if (!gltf) {
+      return;
+    }
 
     this._boxGroup.visible = false;
 
@@ -200,7 +202,9 @@ export class Player3D {
   }
 
   takeDamage(amount, attacker, hud) {
-    if (this.hp <= 0) return;
+    if (this.hp <= 0) {
+      return;
+    }
     this.hp = Math.max(0, this.hp - amount);
     hud.updatePlayer(this.hp, this.maxHp, this.mp, this.maxMp);
 
@@ -215,9 +219,15 @@ export class Player3D {
     hud.addChat('You have died!', 'err');
 
     if (this._mixer) {
-      if (this._idleAction) this._idleAction.setEffectiveWeight(0);
-      if (this._walkAction) this._walkAction.setEffectiveWeight(0);
-      if (this._runAction) this._runAction.setEffectiveWeight(0);
+      if (this._idleAction) {
+        this._idleAction.setEffectiveWeight(0);
+      }
+      if (this._walkAction) {
+        this._walkAction.setEffectiveWeight(0);
+      }
+      if (this._runAction) {
+        this._runAction.setEffectiveWeight(0);
+      }
     }
 
     hud.showDeathScreen(() => {
@@ -235,8 +245,12 @@ export class Player3D {
   }
 
   gainXp(amount, hud) {
-    if (this.hp <= 0) return; // Can't gain XP while dead!
-    if (this.level >= MAX_LEVEL) return;
+    if (this.hp <= 0) {
+      return;
+    } // Can't gain XP while dead!
+    if (this.level >= MAX_LEVEL) {
+      return;
+    }
     this.xp += amount;
 
     // Check level up
@@ -299,17 +313,25 @@ export class Player3D {
     if (cookieVal) {
       try {
         const data = JSON.parse(cookieVal);
-        if (data.level) this.level = parseInt(data.level) || 1;
+        if (data.level) {
+          this.level = parseInt(data.level) || 1;
+        }
         if (this.level >= MAX_LEVEL) {
           this.level = MAX_LEVEL;
           this.xp = 0;
           this.maxXp = 0;
         } else {
-          if (data.xp !== undefined) this.xp = parseInt(data.xp) || 0;
+          if (data.xp !== undefined) {
+            this.xp = parseInt(data.xp) || 0;
+          }
           this.maxXp = this.level * 400;
         }
-        if (data.zones) this.discoveredZones = data.zones;
-        if (data.npcs) this.talkedNpcs = data.npcs;
+        if (data.zones) {
+          this.discoveredZones = data.zones;
+        }
+        if (data.npcs) {
+          this.talkedNpcs = data.npcs;
+        }
       } catch (e) {
         console.warn('Failed to parse game progress cookie:', e);
       }
@@ -332,7 +354,9 @@ export class Player3D {
   }
 
   discoverZone(zone, hud) {
-    if (this.discoveredZones.includes(zone)) return;
+    if (this.discoveredZones.includes(zone)) {
+      return;
+    }
     this.discoveredZones.push(zone);
     if (this.level < MAX_LEVEL) {
       hud.addChat(`Discovered: ${zone} (+50 XP)`, 'sys');
@@ -343,7 +367,9 @@ export class Player3D {
   }
 
   talkToNpc(npcId, npcName, hud) {
-    if (this.talkedNpcs.includes(npcId)) return;
+    if (this.talkedNpcs.includes(npcId)) {
+      return;
+    }
     this.talkedNpcs.push(npcId);
     if (this.level < MAX_LEVEL) {
       hud.addChat(`Met ${npcName} (+35 XP)`, 'sys');
@@ -471,7 +497,9 @@ export class Player3D {
   }
 
   _playOnce(...clipNames) {
-    if (!this._mixer || !this._animations) return;
+    if (!this._mixer || !this._animations) {
+      return;
+    }
     for (const name of clipNames) {
       const clip = this._animations.find(c => c.name === name);
       if (clip) {
@@ -500,7 +528,9 @@ export class Player3D {
 
   update(inputState, delta, hud) {
     if (this.hp <= 0) {
-      if (this._mixer) this._mixer.update(delta);
+      if (this._mixer) {
+        this._mixer.update(delta);
+      }
       return;
     }
 
@@ -632,9 +662,15 @@ export class Player3D {
       this._isRunning = moving && running;
 
       if (moving !== wasMoving || (moving && running !== wasRunning)) {
-        if (this._idleAction) this._idleAction.setEffectiveWeight(moving ? 0 : 1);
-        if (this._walkAction) this._walkAction.setEffectiveWeight(moving && !running ? 1 : 0);
-        if (this._runAction) this._runAction.setEffectiveWeight(moving && running ? 1 : 0);
+        if (this._idleAction) {
+          this._idleAction.setEffectiveWeight(moving ? 0 : 1);
+        }
+        if (this._walkAction) {
+          this._walkAction.setEffectiveWeight(moving && !running ? 1 : 0);
+        }
+        if (this._runAction) {
+          this._runAction.setEffectiveWeight(moving && running ? 1 : 0);
+        }
         if (moving && !running && !this._runAction && this._walkAction) {
           this._walkAction.setEffectiveWeight(1);
         }
@@ -731,11 +767,15 @@ export class ThirdPersonCamera {
     });
 
     window.addEventListener('mouseup', e => {
-      if (e.button === 1 || e.button === 2) this._isDragging = false;
+      if (e.button === 1 || e.button === 2) {
+        this._isDragging = false;
+      }
     });
 
     window.addEventListener('mousemove', e => {
-      if (!this._isDragging) return;
+      if (!this._isDragging) {
+        return;
+      }
       const dx = e.clientX - this._lastMX;
       const dy = e.clientY - this._lastMY;
       this._lastMX = e.clientX;

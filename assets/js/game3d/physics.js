@@ -55,10 +55,15 @@ export function resolveCollisions(position, radius) {
           const bottom = c.zMax - position.z;
           const min = Math.min(left, right, top, bottom);
 
-          if (min === left) position.x -= radius;
-          else if (min === right) position.x += radius;
-          else if (min === top) position.z -= radius;
-          else position.z += radius;
+          if (min === left) {
+            position.x -= radius;
+          } else if (min === right) {
+            position.x += radius;
+          } else if (min === top) {
+            position.z -= radius;
+          } else {
+            position.z += radius;
+          }
         }
       }
     }

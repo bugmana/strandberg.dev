@@ -257,7 +257,9 @@ playBtn.addEventListener('click', () => {
 
   const tick = setInterval(() => {
     progress += randf(1.8, 5.5);
-    if (progress > 100) progress = 100;
+    if (progress > 100) {
+      progress = 100;
+    }
 
     loadingFill.style.width = progress + '%';
 

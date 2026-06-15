@@ -1,5 +1,5 @@
 import * as THREE from 'three';
-import { buildTerrain, buildLighting, buildSky, buildFog, getHeightAt } from './world.js';
+import { buildTerrain, buildLighting, buildSky, buildFog } from './world.js';
 import {
   buildAbbey,
   buildInn,
@@ -99,7 +99,9 @@ const ZONE_DEFS = [
 
 function getZone(px, pz) {
   for (const z of ZONE_DEFS) {
-    if (px >= z.xMin && px <= z.xMax && pz >= z.zMin && pz <= z.zMax) return z.name;
+    if (px >= z.xMin && px <= z.xMax && pz >= z.zMin && pz <= z.zMax) {
+      return z.name;
+    }
   }
   return 'Elwynn Forest';
 }
@@ -134,7 +136,7 @@ function getZone(px, pz) {
 
   await Promise.all([
     player.initModel().then(onModelLoaded),
-    ...npcs.map((npc, i) => npc.initModel(i).then(onModelLoaded))
+    ...npcs.map(npc => npc.initModel().then(onModelLoaded)),
   ]);
 
   // Initial HUD state
@@ -167,7 +169,9 @@ function getZone(px, pz) {
   const mouse = new THREE.Vector2();
 
   const handleTargeting = (clientX, clientY) => {
-    if (document.activeElement && document.activeElement.tagName === 'INPUT') return;
+    if (document.activeElement && document.activeElement.tagName === 'INPUT') {
+      return;
+    }
 
     mouse.x = (clientX / window.innerWidth) * 2 - 1;
     mouse.y = -(clientY / window.innerHeight) * 2 + 1;
@@ -197,7 +201,9 @@ function getZone(px, pz) {
   };
 
   window.addEventListener('mousedown', e => {
-    if (e.button !== 0) return; // Only left click
+    if (e.button !== 0) {
+      return;
+    } // Only left click
     handleTargeting(e.clientX, e.clientY);
   });
 
@@ -248,12 +254,16 @@ function getZone(px, pz) {
   // Tab (cycle target) and Escape (clear target) key handlers
   let tabIndex = 0;
   window.addEventListener('keydown', e => {
-    if (document.activeElement && document.activeElement.tagName === 'INPUT') return;
+    if (document.activeElement && document.activeElement.tagName === 'INPUT') {
+      return;
+    }
 
     if (e.key === 'Tab') {
       e.preventDefault();
       const aliveNpcs = npcs.filter(n => !n.isDead);
-      if (aliveNpcs.length === 0) return;
+      if (aliveNpcs.length === 0) {
+        return;
+      }
 
       // Sort by distance to player
       aliveNpcs.sort((a, b) => a.distanceTo(player.position) - b.distanceTo(player.position));
@@ -289,7 +299,9 @@ function getZone(px, pz) {
       sunLight.target = player.group;
     }
 
-    for (const npc of npcs) npc.update(delta, player, hud);
+    for (const npc of npcs) {
+      npc.update(delta, player, hud);
+    }
 
     // Zone check — throttled to every 10 frames (zones are large, no need to check every tick)
     if (++_frameTick % 10 === 0) {
@@ -329,7 +341,9 @@ function getZone(px, pz) {
       nearestDist < INTERACT_RANGE && !hud.isDialogueOpen && nearest && !nearest.isDead;
     hud.showInteractPrompt(canInteract, nearest && nearest.hostile);
 
-    if (interactCooldown > 0) interactCooldown -= delta;
+    if (interactCooldown > 0) {
+      interactCooldown -= delta;
+    }
     if (input.interact && canInteract && interactCooldown <= 0) {
       input.interact = false;
       interactCooldown = 0.4;
@@ -369,7 +383,9 @@ function getZone(px, pz) {
     // Action bar
     if (input.actionSlot > 0) {
       const action = hud.triggerAction(input.actionSlot - 1);
-      if (action) player.performAction(action, hud, targetNPC);
+      if (action) {
+        player.performAction(action, hud, targetNPC);
+      }
       input.actionSlot = 0;
     }
     hud.updateCooldowns(delta);

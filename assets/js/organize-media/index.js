@@ -5,7 +5,6 @@ import {
   getCookie,
   getIdToken,
   showSignedIn,
-  getJwtExp,
   signOut,
 } from './auth.js';
 import { escapeHtml, updateProgress } from './utils.js';
@@ -101,7 +100,9 @@ window.onload = function () {
       window.idToken = cookieToken;
       updateUploadButton();
       showSignedIn();
-      if (elements.fileInfo) elements.fileInfo.innerHTML = '';
+      if (elements.fileInfo) {
+        elements.fileInfo.innerHTML = '';
+      }
     } catch (err) {
       console.warn('Stored idToken invalid or expired:', err);
       if (elements.fileInfo) {
@@ -121,7 +122,9 @@ window.onload = function () {
             window.idToken = response.credential;
             updateUploadButton();
             showSignedIn();
-            if (elements.fileInfo) elements.fileInfo.innerHTML = '';
+            if (elements.fileInfo) {
+              elements.fileInfo.innerHTML = '';
+            }
           } catch (err) {
             console.error('Sign-in failed:', err);
             if (elements.fileInfo) {
@@ -143,7 +146,9 @@ window.onload = function () {
     elements.signinStatus?.classList.add('hidden');
 
     // Setup sign-out button
-    if (elements.bannerSignout) elements.bannerSignout.onclick = signOut;
+    if (elements.bannerSignout) {
+      elements.bannerSignout.onclick = signOut;
+    }
   }
 
   if (elements.videoInput) {
@@ -151,8 +156,12 @@ window.onload = function () {
       const file = this.files[0];
 
       if (!file) {
-        if (elements.uploadButton) elements.uploadButton.disabled = true;
-        if (elements.fileInfo) elements.fileInfo.innerHTML = '';
+        if (elements.uploadButton) {
+          elements.uploadButton.disabled = true;
+        }
+        if (elements.fileInfo) {
+          elements.fileInfo.innerHTML = '';
+        }
         return;
       }
 
@@ -160,7 +169,9 @@ window.onload = function () {
         if (elements.fileInfo) {
           elements.fileInfo.innerHTML = '<span class="error">File too large. Max size: 5 GB</span>';
         }
-        if (elements.uploadButton) elements.uploadButton.disabled = true;
+        if (elements.uploadButton) {
+          elements.uploadButton.disabled = true;
+        }
         return;
       }
 
@@ -169,7 +180,9 @@ window.onload = function () {
         if (elements.fileInfo) {
           elements.fileInfo.innerHTML = `<span class="error">File type not allowed. Supported: ${Object.keys(ALLOWED_CONTENT_TYPES).join(', ')}</span>`;
         }
-        if (elements.uploadButton) elements.uploadButton.disabled = true;
+        if (elements.uploadButton) {
+          elements.uploadButton.disabled = true;
+        }
         return;
       }
 
@@ -184,7 +197,9 @@ window.onload = function () {
   if (elements.uploadButton) {
     elements.uploadButton.addEventListener('click', async function () {
       const file = elements.videoInput?.files[0];
-      if (!file) return;
+      if (!file) {
+        return;
+      }
 
       if (!getIdToken() && !MOCK_UPLOAD) {
         if (elements.fileInfo) {
@@ -194,7 +209,9 @@ window.onload = function () {
       }
 
       elements.uploadButton.disabled = true;
-      if (elements.resultText) elements.resultText.textContent = '';
+      if (elements.resultText) {
+        elements.resultText.textContent = '';
+      }
 
       if (elements.downloadLink) {
         elements.downloadLink.textContent = '';

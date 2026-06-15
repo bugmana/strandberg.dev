@@ -67,7 +67,9 @@ export function beginMetadataWait(file) {
   setTimeout(pollForMetadata, pollInterval);
 
   async function pollForMetadata() {
-    if (!polling) return;
+    if (!polling) {
+      return;
+    }
 
     pollAttempts++;
     if (pollAttempts > maxAttempts) {
@@ -113,6 +115,7 @@ export function beginMetadataWait(file) {
 
     const token = getIdToken();
     const url = `${SIGNED_URL_ENDPOINT}?filename=${encodeURIComponent(file.name)}`;
+    // eslint-disable-next-line no-console
     console.info('Fetching metadata for', file.name, 'url=', url);
 
     const response = await fetch(url, {
@@ -120,25 +123,38 @@ export function beginMetadataWait(file) {
       headers: { Authorization: `Bearer ${token}` },
     });
 
+    // eslint-disable-next-line no-console
     console.info('Received metadata fetch response', response.status, response.statusText);
     return response;
   }
 
   async function handleSuccess(response) {
     const metadata = await response.json();
-    if (elements.resultText) elements.resultText.innerHTML = '';
+    if (elements.resultText) {
+      elements.resultText.innerHTML = '';
+    }
     showMetadata(metadata);
     polling = false;
 
     setTimeout(() => {
-      if (elements.videoInput) elements.videoInput.value = '';
-      if (elements.uploadButton) elements.uploadButton.disabled = true;
+      if (elements.videoInput) {
+        elements.videoInput.value = '';
+      }
+      if (elements.uploadButton) {
+        elements.uploadButton.disabled = true;
+      }
 
       const fileInfo = document.getElementById('fileInfo');
-      if (fileInfo) fileInfo.innerHTML = '';
+      if (fileInfo) {
+        fileInfo.innerHTML = '';
+      }
 
-      if (elements.progressBar) elements.progressBar.style.width = '0%';
-      if (elements.progressText) elements.progressText.textContent = '0%';
+      if (elements.progressBar) {
+        elements.progressBar.style.width = '0%';
+      }
+      if (elements.progressText) {
+        elements.progressText.textContent = '0%';
+      }
     }, RESET_UI_DELAY);
   }
 

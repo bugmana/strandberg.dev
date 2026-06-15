@@ -250,7 +250,9 @@ export class NPC3D {
   }
 
   takeDamage(amount, player, hud) {
-    if (this.isDead) return;
+    if (this.isDead) {
+      return;
+    }
     this.hp = Math.max(0, this.hp - amount);
     hud.updateTargetHp(this.hp, this.maxHp);
 
@@ -298,7 +300,9 @@ export class NPC3D {
   }
 
   _playOnce(...clipNames) {
-    if (!this._mixer || !this._animations) return;
+    if (!this._mixer || !this._animations) {
+      return;
+    }
     for (const name of clipNames) {
       const clip = this._animations.find(c => c.name === name);
       if (clip) {
@@ -389,12 +393,16 @@ export class NPC3D {
   }
 
   /** Async: try to load a glTF model. Falls back to box mesh on failure. */
-  async initModel(modelIndex) {
+  async initModel() {
     const lookupId = this.def.id.startsWith('legacy_bug') ? 'legacy_bug' : this.def.id;
     const url = NPC_MODELS[lookupId];
-    if (!url) return;
+    if (!url) {
+      return;
+    }
     const gltf = await loadGLTF(url);
-    if (!gltf) return;
+    if (!gltf) {
+      return;
+    }
 
     this._boxGroup.visible = false;
 
@@ -405,7 +413,9 @@ export class NPC3D {
     model.scale.setScalar(scale);
     model.position.y = -bbox.min.y * scale;
     model.traverse(c => {
-      if (c.isMesh) c.castShadow = true;
+      if (c.isMesh) {
+        c.castShadow = true;
+      }
     });
     this.group.add(model);
 
@@ -442,12 +452,16 @@ export class NPC3D {
 
     // Throttle updates for distant NPCs if not in combat and not dead
     if (distSq > 100 * 100 && !this.combatTarget && !this.isDead) {
-      if (this._frameTick % 15 !== 0) return;
+      if (this._frameTick % 15 !== 0) {
+        return;
+      }
       delta *= 15;
       this._throttledFactor = 15;
     }
 
-    if (this._mixer) this._mixer.update(delta);
+    if (this._mixer) {
+      this._mixer.update(delta);
+    }
 
     if (this.isDead) {
       this.respawnTimer -= delta;
