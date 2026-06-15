@@ -30,6 +30,9 @@ export class Player3D {
     this._runAction = null;
     this._isMoving = false;
     this._isRunning = false;
+    this.isDancing = false;
+    this.danceTime = 0;
+    this.bones = {};
     this._scene = scene;
     this._boxGroup = new THREE.Group(); // holds the fallback box mesh children
 
@@ -102,9 +105,13 @@ export class Player3D {
     model.scale.setScalar(scale);
     model.position.y = -bbox.min.y * scale;
 
+    this.bones = {};
     model.traverse(c => {
       if (c.isMesh) {
         c.castShadow = true;
+      }
+      if (c.name) {
+        this.bones[c.name] = c;
       }
     });
     this.group.add(model);
@@ -139,7 +146,6 @@ export class Player3D {
   }
 
   // ── Action abilities ────────────────────────────────────────────────────────
-  _torchLight = null;
 
   performAction(action, hud, targetNPC) {
     const levelMult = 1 + (this.level - 1) * 0.15; // +15% power per level
@@ -194,10 +200,20 @@ export class Player3D {
         this._playOnce('Spellcast_Shoot', 'Spellcast_Raise', 'Interact');
         break;
       }
-      case 'monitor':
-        this._toggleTorch();
-        hud.addChat(this._torchLight ? 'Monitor on.' : 'Monitor off.', 'sys');
-        break;
+    }
+  }
+
+  startDancing() {
+    this.isDancing = true;
+    this.danceTime = 0;
+    if (this._idleAction) {
+      this._idleAction.setEffectiveWeight(0);
+    }
+    if (this._walkAction) {
+      this._walkAction.setEffectiveWeight(0);
+    }
+    if (this._runAction) {
+      this._runAction.setEffectiveWeight(0);
     }
   }
 
@@ -515,17 +531,6 @@ export class Player3D {
     }
   }
 
-  _toggleTorch() {
-    if (this._torchLight) {
-      this.group.remove(this._torchLight);
-      this._torchLight = null;
-    } else {
-      this._torchLight = new THREE.PointLight(0xffaa44, 2, 20);
-      this._torchLight.position.set(0.5, 2.2, 0.3);
-      this.group.add(this._torchLight);
-    }
-  }
-
   update(inputState, delta, hud) {
     if (this.hp <= 0) {
       if (this._mixer) {
@@ -593,6 +598,18 @@ export class Player3D {
     const moving = mx !== 0 || mz !== 0;
     this._isMoving = moving;
     this._isMovingForwardOrBack = moving && (forward || back);
+
+    // Cancel dance if player moves or jumps
+    if ((moving || inputState.jump) && this.isDancing) {
+      this.isDancing = false;
+      const hips = this.bones['hips'];
+      if (hips && this.initialHipsY !== undefined) {
+        hips.position.y = this.initialHipsY;
+      }
+      if (this._idleAction) {
+        this._idleAction.setEffectiveWeight(1);
+      }
+    }
 
     if (moving) {
       const len = Math.sqrt(mx * mx + mz * mz);
@@ -679,6 +696,52 @@ export class Player3D {
         }
       }
       this._mixer.update(delta);
+
+      if (this.isDancing) {
+        this.danceTime = (this.danceTime || 0) + delta;
+        const t = this.danceTime * 4.0; // speed multiplier for dance
+
+        const hips = this.bones['hips'];
+        if (hips) {
+          if (this.initialHipsY === undefined) {
+            this.initialHipsY = hips.position.y;
+          }
+          hips.position.y = this.initialHipsY + Math.sin(t * 2) * 0.06;
+          hips.rotation.z = Math.sin(t) * 0.12;
+          hips.rotation.y = Math.cos(t) * 0.08;
+        }
+
+        const spine = this.bones['spine'];
+        if (spine) {
+          spine.rotation.y = Math.sin(t) * 0.15;
+          spine.rotation.x = Math.cos(t * 2) * 0.05;
+        }
+
+        const head = this.bones['head'];
+        if (head) {
+          head.rotation.y = -Math.sin(t) * 0.1;
+          head.rotation.z = Math.cos(t * 2) * 0.08;
+        }
+
+        const upperArmR = this.bones['upperarm.r'];
+        if (upperArmR) {
+          // Travolta finger-pointing high/low diagonal pattern
+          upperArmR.rotation.z = -1.2 + Math.sin(t) * 0.6;
+          upperArmR.rotation.x = -0.5 + Math.cos(t) * 0.4;
+        }
+
+        const lowerArmR = this.bones['lowerarm.r'];
+        if (lowerArmR) {
+          lowerArmR.rotation.y = 0.4 + Math.sin(t * 2) * 0.2;
+        }
+
+        const upperArmL = this.bones['upperarm.l'];
+        if (upperArmL) {
+          // Left arm swaying at the hip
+          upperArmL.rotation.z = 0.8 + Math.cos(t) * 0.3;
+          upperArmL.rotation.x = 0.3 + Math.sin(t) * 0.2;
+        }
+      }
     }
 
     // Update active level-up effects

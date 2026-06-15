@@ -54,6 +54,12 @@ export class HUD3D {
     // Chat
     this._chatEl = document.getElementById('chat-messages');
     this._chatInput = document.getElementById('chat-input');
+    if (this._chatInput) {
+      const isMobile = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
+      this._chatInput.placeholder = isMobile
+        ? 'Tap here to chat...'
+        : 'Press Enter or click to chat...';
+    }
 
     // Interact prompt
     this._interactEl = document.getElementById('interact-prompt');
@@ -103,11 +109,14 @@ export class HUD3D {
         if (this.isChatInputActive) {
           const text = this._chatInput.value.trim();
           if (text) {
-            this.addChat(`You: ${text}`);
-            if (this.player && this.player.group) {
-              this.spawnSpeechBubble('player', this.player.group, text);
+            if (text.startsWith('/')) {
+              this._processChatCommand(text);
+            } else {
+              this.addChat(`You: ${text}`);
+              if (this.player && this.player.group) {
+                this.spawnSpeechBubble('player', this.player.group, text);
+              }
             }
-            this._processChatCommand(text);
           }
           this.hideChatInput();
         } else {
@@ -124,6 +133,8 @@ export class HUD3D {
         this.showChatInput();
       }
     });
+
+    this._isMobile = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
   }
 
   // ── Loading bar ────────────────────────────────────────────────────────────
@@ -188,6 +199,7 @@ export class HUD3D {
 
   // ── Target frame ──────────────────────────────────────────────────────────
   setTarget(npcDef) {
+    this._currentTarget = npcDef;
     if (!npcDef) {
       this._targetFrame.classList.add('hidden');
       return;
@@ -221,10 +233,22 @@ export class HUD3D {
 
   // ── Interact prompt ───────────────────────────────────────────────────────
   showInteractPrompt(show, isHostile = false) {
+    const btnInteract = document.getElementById('btn-mobile-interact');
+    if (btnInteract) {
+      const targetIcon = show && isHostile ? '⚔️' : '💬';
+      if (btnInteract.textContent !== targetIcon) {
+        btnInteract.textContent = targetIcon;
+      }
+    }
+
     if (show) {
       this._interactEl.innerHTML = isHostile
-        ? 'Press <kbd>E</kbd> to attack'
-        : 'Press <kbd>E</kbd> to speak';
+        ? this._isMobile
+          ? 'Press <kbd>⚔️</kbd> to attack'
+          : 'Press <kbd>E</kbd> to attack'
+        : this._isMobile
+          ? 'Press <kbd>💬</kbd> to speak'
+          : 'Press <kbd>E</kbd> to speak';
       this._interactEl.classList.remove('hidden');
     } else {
       this._interactEl.classList.add('hidden');
@@ -316,18 +340,16 @@ export class HUD3D {
   }
 
   showChatInput() {
-    this._chatInput.classList.remove('hidden');
     this._chatInput.focus();
   }
 
   hideChatInput() {
     this._chatInput.value = '';
-    this._chatInput.classList.add('hidden');
     this._chatInput.blur();
   }
 
   get isChatInputActive() {
-    return this._chatInput && !this._chatInput.classList.contains('hidden');
+    return this._chatInput && document.activeElement === this._chatInput;
   }
 
   _processChatCommand(text) {
@@ -338,7 +360,15 @@ export class HUD3D {
       const roll = Math.floor(Math.random() * 100) + 1;
       this.addChat(`You roll ${roll} (1-100).`, 'sys');
     } else if (lower.startsWith('/dance')) {
-      this.addChat('You bust out some moves in the middle of Goldshire!', 'sys');
+      const target = this._currentTarget;
+      if (target && !target.isDead) {
+        this.addChat(`You dance with ${target.def.name}.`, 'emote');
+      } else {
+        this.addChat('You start to dance.', 'emote');
+      }
+      if (this.player) {
+        this.player.startDancing();
+      }
     } else if (lower.startsWith('/who')) {
       this.addChat(
         'Zone: Elwynn Forest (6 players online: Farley, Argus, Dughan, Pestle, Kobold, You)',
@@ -586,7 +616,6 @@ export class HUD3D {
     { id: 'deploy', icon: '⚡', name: 'Deploy Code', cd: 1.5, type: 'combat', energy: 25 },
     { id: 'review', icon: '🔍', name: 'Code Review', cd: 8, type: 'combat', energy: 40 },
     { id: 'coffee', icon: '☕', name: 'Coffee Break', cd: 6, type: 'spell', energy: 0 },
-    { id: 'monitor', icon: '🖥', name: 'Toggle Monitor', cd: 0.5, type: 'utility', energy: 0 },
   ];
 
   _buildActionBar() {

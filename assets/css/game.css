@@ -334,6 +334,9 @@ body {
 .chat-line.err {
   color: #ff6060;
 }
+.chat-line.emote {
+  color: #ff80ff; /* WoW Emote pink */
+}
 
 #chat-input {
   background: rgba(0, 0, 0, 0.7);
@@ -346,8 +349,12 @@ body {
   outline: none;
   width: 100%;
   pointer-events: all;
+  opacity: 0.55;
+  transition: opacity 0.2s, border-color 0.2s;
 }
-#chat-input:focus {
+#chat-input:focus,
+#chat-input:hover {
+  opacity: 1;
   border-color: #ffe890;
 }
 
