@@ -294,7 +294,7 @@ body {
   user-select: none;
 }
 #version-text a {
-  color: #3a382c;
+  color: #7a7660;
   text-decoration: none;
   transition:
     color 0.2s,

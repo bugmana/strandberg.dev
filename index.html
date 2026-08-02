@@ -45,8 +45,9 @@ layout: null
     </div>
     <!-- #login-screen -->
 
+    {% assign commit_sha = site.github.build_revision | slice: 0, 7 %}
     <div id="version-text">
-      <a href="https://github.com/astrberg/strandberg.dev/commits/main" target="_blank" rel="noopener noreferrer" id="version-link"></a>
+      <a href="https://github.com/astrberg/strandberg.dev/{% if site.github.build_revision %}commit/{{ site.github.build_revision }}{% else %}commits/main{% endif %}" target="_blank" rel="noopener noreferrer" id="version-link">{% if commit_sha != "" %}Commit {{ commit_sha }}{% endif %}</a>
     </div>
     <div id="fade-overlay"></div>
 
