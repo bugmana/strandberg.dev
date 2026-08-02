@@ -293,6 +293,17 @@ body {
   z-index: 10;
   user-select: none;
 }
+#version-text a {
+  color: #3a382c;
+  text-decoration: none;
+  transition:
+    color 0.2s,
+    text-shadow 0.2s;
+}
+#version-text a:hover {
+  color: #f0d060;
+  text-shadow: 0 0 6px rgba(200, 150, 20, 0.45);
+}
 
 /* ── Fade overlay ── */
 #fade-overlay {

@@ -285,3 +285,27 @@ playBtn.addEventListener('click', () => {
     }
   }, 80);
 });
+
+// ── Fetch latest commit hash ──────────────────────────────────────────────────
+async function initCommitVersion() {
+  const versionLink = document.getElementById('version-link');
+  if (!versionLink) {
+    return;
+  }
+  try {
+    const res = await fetch('https://api.github.com/repos/astrberg/strandberg.dev/commits/main');
+    if (res.ok) {
+      const data = await res.json();
+      const shortSha = data.sha ? data.sha.substring(0, 7) : null;
+      if (shortSha) {
+        versionLink.textContent = `Commit ${shortSha}`;
+        versionLink.href =
+          data.html_url || `https://github.com/astrberg/strandberg.dev/commit/${data.sha}`;
+      }
+    }
+  } catch {
+    // Graceful fallback to default link
+  }
+}
+
+initCommitVersion();
