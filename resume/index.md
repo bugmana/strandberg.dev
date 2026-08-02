@@ -48,7 +48,7 @@ Built RESTful event-driven microservices handling food & beverage menus and thou
 ## Projects
 
 `2025`
-**[Organize Media](/organize-media/)** - Media organization tool with Google Cloud Run microservices backend for dating videos missing timestamps. Uses three detection algorithms: filename parsing, OCR for printed dates, and Gemini AI estimation. Frontend built with Jekyll, featuring Google Sign-In authentication and JWT token handling.
+**Organize Media** *(Archived)* - Media organization tool with Google Cloud Run microservices backend for dating videos missing timestamps. Uses three detection algorithms: filename parsing, OCR for printed dates, and Gemini AI estimation. Frontend built with Jekyll, featuring Google Sign-In authentication and JWT token handling.
 
 `2024`
 **[Venice AI Chatbot](https://ai.strandberg.dev){:target="\_blank"}** - Python FastAPI backend with WebSocket communication, Google OAuth authentication, and Venice AI integration deployed on Google Cloud Run. Forked and customized React/TypeScript frontend.

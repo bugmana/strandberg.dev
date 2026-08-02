@@ -8,19 +8,3 @@ markdown: kramdown
 plugins:
   - jekyll-seo-tag
   - jekyll-sitemap
-
-upload_config:
-  google_client_id: '659272683759-lv86s98g1uv46doc7stqi1sjq4174947.apps.googleusercontent.com'
-  signed_url_endpoint: 'https://strandberg-8ev5xmgf.ew.gateway.dev/upload-media'
-  mock_upload: false
-  max_file_size_bytes: 204800000 # ~200 MB
-  allowed_content_types:
-    - { ext: '.mp4', type: 'video/mp4' }
-    - { ext: '.avi', type: 'video/x-msvideo' }
-    - { ext: '.mov', type: 'video/quicktime' }
-    - { ext: '.mpg', type: 'video/mpeg' }
-    - { ext: '.mpeg', type: 'video/mpeg' }
-    - { ext: '.mkv', type: 'video/x-matroska' }
-    - { ext: '.wmv', type: 'video/x-ms-wmv' }
-    - { ext: '.flv', type: 'video/x-flv' }
-    - { ext: '.webm', type: 'video/webm' }
