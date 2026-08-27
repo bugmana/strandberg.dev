@@ -40,7 +40,7 @@ Built RESTful event-driven microservices handling food & beverage menus and thou
 
 ## Skills
 
-**Languages & Frameworks:** [Python](https://www.python.org/){:target="\_blank"}, [C#](https://dotnet.microsoft.com/en-us/languages/csharp){:target="\_blank"}, [.NET](https://dotnet.microsoft.com/){:target="\_blank"}, SQL, [Dart](https://dart.dev/){:target="\_blank"}, [Flutter](https://flutter.dev/){:target="\_blank"}, [TypeScript](https://www.typescriptlang.org/){:target="\_blank"}, [Bash](https://www.gnu.org/software/bash/){:target="\_blank"}
+**Languages & Frameworks:** [Python](https://www.python.org/){:target="\_blank"}, [C#](https://dotnet.microsoft.com/en-us/languages/csharp){:target="\_blank"}, [.NET](https://dotnet.microsoft.com/){:target="\_blank"}, SQL, [Bash](https://www.gnu.org/software/bash/){:target="\_blank"}, [TypeScript](https://www.typescriptlang.org/){:target="\_blank"}
 
 **Cloud & Infrastructure:** [GCP](https://cloud.google.com/){:target="\_blank"}, [Azure](https://azure.microsoft.com/){:target="\_blank"}, [Docker](https://www.docker.com/){:target="\_blank"}, [Terraform](https://www.terraform.io/){:target="\_blank"}, DevOps
 
