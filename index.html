@@ -5,8 +5,15 @@ layout: null
 <!doctype html>
 <html lang="en">
   <head>
-    {% seo %}
+    <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#03050e" />
+    {% seo %}
+    <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin />
+    <link rel="dns-prefetch" href="https://cdn.jsdelivr.net" />
+    <link rel="modulepreload" href="https://cdn.jsdelivr.net/npm/three@0.165.0/build/three.module.js" />
+    <link rel="prefetch" href="/world/" />
+    <link rel="prefetch" href="/assets/css/game.css" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link href="/assets/css/login.css" rel="stylesheet" />
   </head>
@@ -47,7 +54,7 @@ layout: null
 
     {% assign commit_sha = site.github.build_revision | slice: 0, 7 %}
     <div id="version-text">
-      <a href="https://github.com/astrberg/strandberg.dev/{% if site.github.build_revision %}commit/{{ site.github.build_revision }}{% else %}commits/main{% endif %}" target="_blank" rel="noopener noreferrer" id="version-link">{% if commit_sha != "" %}Commit {{ commit_sha }}{% endif %}</a>
+      <a href="https://github.com/bugmana/strandberg.dev/{% if site.github.build_revision %}commit/{{ site.github.build_revision }}{% else %}commits/main{% endif %}" target="_blank" rel="noopener noreferrer" id="version-link">{% if commit_sha != "" %}Commit {{ commit_sha }}{% endif %}</a>
     </div>
     <div id="fade-overlay"></div>
 

@@ -355,7 +355,10 @@ export class HUD3D {
   _processChatCommand(text) {
     const lower = text.toLowerCase();
     if (lower.startsWith('/help')) {
-      this.addChat('Commands: /help, /roll, /dance, /who, /levelup, /maxlevel', 'sys');
+      this.addChat(
+        'Commands: /help, /roll, /dance, /who, /resume, /clear, /levelup, /maxlevel',
+        'sys'
+      );
     } else if (lower.startsWith('/roll')) {
       const roll = Math.floor(Math.random() * 100) + 1;
       this.addChat(`You roll ${roll} (1-100).`, 'sys');
@@ -374,6 +377,13 @@ export class HUD3D {
         'Zone: Elwynn Forest (6 players online: Farley, Argus, Dughan, Pestle, Kobold, You)',
         'sys'
       );
+    } else if (lower.startsWith('/resume') || lower.startsWith('/about')) {
+      this.addChat('Opening Aron Strandberg resume...', 'sys');
+      setTimeout(() => {
+        window.location.href = '/resume/';
+      }, 400);
+    } else if (lower.startsWith('/clear')) {
+      this._chatEl.innerHTML = '';
     } else if (lower.startsWith('/levelup')) {
       if (this.player) {
         if (this.player.level < 10) {

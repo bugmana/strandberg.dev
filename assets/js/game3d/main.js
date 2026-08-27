@@ -274,6 +274,10 @@ function getZone(px, pz) {
     }
 
     if (e.key === 'Escape') {
+      if (hud.isDialogueOpen) {
+        hud.closeDialogue();
+        return;
+      }
       targetNPC = null;
       hud.setTarget(null);
     }
@@ -284,6 +288,11 @@ function getZone(px, pz) {
   // ── Game loop ───────────────────────────────────────────────────────────────
   function animate() {
     requestAnimationFrame(animate);
+
+    if (document.hidden) {
+      clock.getDelta(); // Drain delta accumulation while tab is in background
+      return;
+    }
 
     const delta = Math.min(clock.getDelta(), 0.1);
 

@@ -85,10 +85,15 @@ body {
 .contact-links {
   display: flex;
   flex-wrap: wrap;
+  align-items: center;
   gap: 6px 18px;
   margin-bottom: 32px;
   padding-bottom: 24px;
   border-bottom: 1px solid var(--border);
+}
+.contact-links span {
+  color: var(--text-muted);
+  font-size: 0.85rem;
 }
 .contact-links a {
   color: var(--link);
@@ -234,8 +239,19 @@ body {
   .contact-links {
     border-color: #ccc;
   }
+  .contact-links span {
+    color: #555;
+  }
   .contact-links a {
     color: #1a5a8a;
+  }
+
+  .resume h2,
+  .resume p,
+  .resume ul,
+  .resume code {
+    break-inside: avoid;
+    page-break-inside: avoid;
   }
 }
 

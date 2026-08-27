@@ -9,10 +9,11 @@ description: Aron Strandberg is a Cloud Backend Engineer at SEB in Stockholm, Sw
 Cloud Backend Engineer @ SEB
 
 <div class="contact-links">
+  <span>📍 Stockholm, Sweden</span>
   <a href="mailto:aron@strandberg.dev">aron@strandberg.dev</a>
   <a href="https://stackoverflow.com/users/10439888/aron-strandberg" target="_blank">StackOverflow</a>
   <a href="https://www.linkedin.com/in/aron-strandberg" target="_blank">LinkedIn</a>
-  <a href="https://github.com/astrberg" target="_blank">GitHub</a>
+  <a href="https://github.com/bugmana" target="_blank">GitHub</a>
   <a href="javascript:window.print()" class="no-print">🖨️ Print / PDF</a>
 </div>
 
@@ -25,7 +26,7 @@ Backend engineer specializing in scalable cloud solutions and microservices arch
 `Sep 2024 - Present`
 **Cloud Backend Engineer, [SEB](https://seb.se/){:target="\_blank"}**
 
-Building scalable cloud infrastructure and backend services for Northern Europe's leading financial institution.
+Designing and deploying scalable cloud infrastructure and resilient backend services on GCP using Terraform, Python, and C#. Building secure microservices and automated workflows for Northern Europe's leading financial institution.
 
 `Jun 2023 - Sep 2024`
 **Software Engineer, Alrik**
@@ -39,22 +40,22 @@ Built RESTful event-driven microservices handling food & beverage menus and thou
 
 ## Skills
 
-**Languages & Frameworks:** [Python](https://www.python.org/){:target="\_blank"}, [C#](https://dotnet.microsoft.com/en-us/languages/csharp){:target="\_blank"}, [.NET](https://dotnet.microsoft.com/){:target="\_blank"}, SQL, [Bash](https://www.gnu.org/software/bash/){:target="\_blank"}, [TypeScript](https://www.typescriptlang.org/){:target="\_blank"}
+**Languages & Frameworks:** [Python](https://www.python.org/){:target="\_blank"}, [C#](https://dotnet.microsoft.com/en-us/languages/csharp){:target="\_blank"}, [.NET](https://dotnet.microsoft.com/){:target="\_blank"}, SQL, [Dart](https://dart.dev/){:target="\_blank"}, [Flutter](https://flutter.dev/){:target="\_blank"}, [TypeScript](https://www.typescriptlang.org/){:target="\_blank"}, [Bash](https://www.gnu.org/software/bash/){:target="\_blank"}
 
 **Cloud & Infrastructure:** [GCP](https://cloud.google.com/){:target="\_blank"}, [Azure](https://azure.microsoft.com/){:target="\_blank"}, [Docker](https://www.docker.com/){:target="\_blank"}, [Terraform](https://www.terraform.io/){:target="\_blank"}, DevOps
 
-**Tools & Practices:** [Git](https://git-scm.com/){:target="\_blank"}, [GitHub Copilot](https://github.com/features/copilot){:target="\_blank"}, [Claude](https://www.anthropic.com/claude){:target="\_blank"}, Clean Code, SOLID Principles
+**Tools & Practices:** [Git](https://git-scm.com/){:target="\_blank"}, [Antigravity](https://antigravity.google/){:target="\_blank"}, [GitHub Copilot](https://github.com/features/copilot){:target="\_blank"}, [Claude](https://www.anthropic.com/claude){:target="\_blank"}, Clean Code, SOLID Principles
 
 ## Projects
 
-`2025`
-**Organize Media** *(Archived)* - Media organization tool with Google Cloud Run microservices backend for dating videos missing timestamps. Uses three detection algorithms: filename parsing, OCR for printed dates, and Gemini AI estimation. Frontend built with Jekyll, featuring Google Sign-In authentication and JWT token handling.
+`2026`
+**[ShellLite](https://shell.strandberg.dev){:target="\_blank"}** - Cross-platform SSH client and terminal emulator built with Flutter & Dart for iOS, Android, Linux, and Web using Antigravity. Features a pure Dart SSHv2 engine, hardware-backed encryption with biometric auth, real-time server telemetry, custom mobile joystick navigation, and a WebSocket SSH proxy for browser sessions.
 
-`2024`
-**[Venice AI Chatbot](https://ai.strandberg.dev){:target="\_blank"}** - Python FastAPI backend with WebSocket communication, Google OAuth authentication, and Venice AI integration deployed on Google Cloud Run. Forked and customized React/TypeScript frontend.
+`2026`
+**[Alpha Arena](https://crypto.strandberg.dev){:target="\_blank"}** - Quantitative spot-trading and backtesting platform in Python for Bybit. Implements multi-regime causal ensemble strategies, systematic risk execution laws, continuous shadow paper-trading daemons, and a real-time web dashboard.
 
-`2021`
-**[Supervision](https://www.youtube.com/watch?v=oNadSzKORkI){:target="\_blank"}** - Student project built with Python and React.js, integrated with Future Ordering's digital ordering platform.
+`2026`
+**[Project X](https://github.com/bugmana/project-x){:target="\_blank"}** - Serverless event-driven automation platform on GCP built with Python and Gemini AI. Fully provisioned with Terraform Infrastructure-as-Code (IaC), featuring Cloud Functions, Firestore, Secret Manager, and automated CI/CD with Workload Identity Federation.
 
 ## Education
 

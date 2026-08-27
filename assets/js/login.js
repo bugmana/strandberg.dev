@@ -196,6 +196,10 @@ let panAngle = 0;
 function animate() {
   requestAnimationFrame(animate);
 
+  if (document.hidden) {
+    return;
+  }
+
   // Slow rightward pan — classic WoW login feel
   panAngle += 0.00006;
   camera.position.x = Math.sin(panAngle) * 28;
@@ -284,4 +288,17 @@ playBtn.addEventListener('click', () => {
       }, 380);
     }
   }, 80);
+});
+
+// Keyboard navigation support: Enter or Space to play
+window.addEventListener('keydown', e => {
+  if (
+    (e.key === 'Enter' || e.key === ' ') &&
+    document.activeElement !== document.querySelector('.login-footer a')
+  ) {
+    if (!playBtn.disabled) {
+      e.preventDefault();
+      playBtn.click();
+    }
+  }
 });
