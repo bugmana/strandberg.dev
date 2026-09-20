@@ -52,7 +52,7 @@ Built RESTful event-driven microservices handling food & beverage menus and thou
 **[ShellLite](https://shell.strandberg.dev){:target="\_blank"}** - Cross-platform SSH client and terminal emulator built with Flutter & Dart for iOS, Android, Linux, and Web using Antigravity. Features a pure Dart SSHv2 engine, hardware-backed encryption with biometric auth, real-time server telemetry, custom mobile joystick navigation, and a WebSocket SSH proxy for browser sessions.
 
 `2026`
-**[Alpha Arena](https://crypto.strandberg.dev){:target="\_blank"}** - Quantitative spot-trading and backtesting platform in Python for Bybit. Implements multi-regime causal ensemble strategies, systematic risk execution laws, continuous shadow paper-trading daemons, and a real-time web dashboard.
+**[Crypto](https://crypto.strandberg.dev){:target="\_blank"}** - Autonomous quantitative spot-trading and backtesting engine in Python for Bybit. Implements orthogonal dual-sleeve execution (Volume Climax Reversion and Kaufman FRAMA Momentum), house S10 risk laws with mandatory BTC regime gating, continuous crash-resilient shadow paper daemons, and a real-time terminal dashboard.
 
 `2026`
 **[Project X](https://github.com/bugmana/project-x){:target="\_blank"}** - Serverless event-driven automation platform on GCP built with Python and Gemini AI. Fully provisioned with Terraform Infrastructure-as-Code (IaC), featuring Cloud Functions, Firestore, Secret Manager, and automated CI/CD with Workload Identity Federation.
